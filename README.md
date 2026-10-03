@@ -22,3 +22,5 @@ npm.cmd run dev
 具体实际测试记录与剩余项在 Platform docs/teacher-acceptance.md。当前待用户验收，未发布。
 
 真实浏览器冒烟：先启动本地后端并配置测试老师账号，再 `npm.cmd test`；使用已安装 Chrome，在登录后截图，不输出秘密。该测试不替代完整人工验收。
+
+`npm run test:scope` 使用独立Chrome会话，只读检查班级切换、学情历史、测试筛选、签到统计、知识树与课程知会。需要本机验收凭据和已保留的受控跨端测试记录；不会操作家长小程序，截图输出忽略的 `.artifacts/scope`。完整范围/缺项见Platform的 `docs/teacher-scope-matrix.md`。
