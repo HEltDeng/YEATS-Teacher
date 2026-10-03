@@ -8,7 +8,7 @@ npm.cmd run build
 npm.cmd run dev
 ```
 
-开发入口 http://127.0.0.1:8931/teacher/ ，Vite 只代理本机8930。构建后由 Platform 本机 API 提供 http://127.0.0.1:8930/teacher/ ，须重启后端一次加载新构建。不得依赖旧总仓库 node_modules。
+开发入口 http://127.0.0.1:8931/teacher/ ，Vite 只代理本机8930。构建后由 Platform 本机 API 提供 http://127.0.0.1:8930/teacher/ ，首次挂载dist目录需重启后端；之后重新构建并刷新页面即可。不得依赖旧总仓库 node_modules。
 
 测试账号安全取得：本机 `%LOCALAPPDATA%/YEATS/secrets/teacher-acceptance.json`。密码不在源码、截图或聊天中。真实老师账号需平台阶段维护。测试账号在非development环境不可登录，已发会话也被禁用。
 
@@ -24,3 +24,7 @@ npm.cmd run dev
 真实浏览器冒烟：先启动本地后端并配置测试老师账号，再 `npm.cmd test`；使用已安装 Chrome，在登录后截图，不输出秘密。该测试不替代完整人工验收。
 
 `npm run test:scope` 使用独立Chrome会话，只读检查班级切换、学情历史、测试筛选、签到统计、知识树与课程知会。需要本机验收凭据和已保留的受控跨端测试记录；不会操作家长小程序，截图输出忽略的 `.artifacts/scope`。完整范围/缺项见Platform的 `docs/teacher-scope-matrix.md`。
+
+新增周/月课表、测试缺项与期限提醒、结构化提交要求、箭头/文字/撤销批注、批量评语、CSV成绩导入、合并历史和五类审计导出，以及知识变更申请和本人回执。老师不能自行批准申请。
+
+`test:workflows` 会在受控本地夹具数据上发布测试作业、导入成绩、申请知识变更；需显式设置 `YEATS_RUN_MUTATING_UI_TESTS=1`，不要用于真实业务数据。`test:annotation` 同样需该开关、已启动的Vite8931和受控file-image测试图片；使用开发专用tests/annotation-preview.html验证真实授权图片批注及新附件上传，不能替代家长新图片跨端验收。两类测试输出忽略的.artifacts目录，只有本机受保护凭据，无硬编码密码。生产dist不包含测试页面。

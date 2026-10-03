@@ -8,7 +8,9 @@
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview --host 127.0.0.1 --port 8931 --strictPort",
     "test": "node tests/smoke.cjs",
-    "test:scope": "node tests/scope.cjs"
+    "test:scope": "node tests/scope.cjs",
+    "test:workflows": "node tests/workflows.cjs",
+    "test:annotation": "node tests/annotation.cjs"
   },
   "dependencies": {
     "react": "19.2.0",

@@ -11,3 +11,11 @@ export async function api<T=any>(path:string,method='GET',body?:any):Promise<T>{
 export const key=()=>crypto.randomUUID();
 export const date=(v:string)=>v?new Date(v).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',hour12:false}):'—';
 export const status:Row={todo:'未提交',submitted:'待批改',returned:'退回重做',graded:'已批改',present:'已签到',makeup:'补签',absent:'缺勤',leave:'请假',pending:'待平台审核',approved:'已通过',rejected:'已驳回',entry:'入门测',exit:'出门测',scheduled:'待上课',completed:'已完成'};
+
+export async function download(path:string,filename:string){
+ const response=await fetch('/v1/staff'+path,{headers:{Authorization:'Bearer '+token()}});
+ if(!response.ok){if(response.status===401){sessionStorage.removeItem('yeats.teacher.session');window.dispatchEvent(new Event('yeats-expired'))}const error=await response.json().catch(()=>({}));throw Error(error.detail||'导出失败，请重试')}
+ const url=URL.createObjectURL(await response.blob()),anchor=document.createElement('a');anchor.href=url;anchor.download=filename;anchor.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+
+export function mediaUrl(value:string){const u=new URL(value,location.href);return ['127.0.0.1','localhost'].includes(location.hostname)&&['127.0.0.1','localhost'].includes(u.hostname)&&u.pathname.startsWith('/v1/media/')?u.pathname+u.search:value}
